@@ -1,4 +1,6 @@
 // author @Mabon Manoj Ninan M13883690
+// https://github.com/mabonmn
+
 
 #include <iostream>
 #include <cstdlib>
@@ -6,8 +8,24 @@
 #include <fstream>
 #include <stdlib.h>
 #include <string>
+
+// The maximum number of players is predefined as max 10
 #define MAX_PLAYERS 10
+
+
 using namespace std;
+
+
+// Define the Class dice which creates a dice based on the total number of sides
+// The class also contains a roll() function that generates a random number based on the 
+// total number of sides in the dice. 
+// Private 
+//                   1. numSides -> Number of sides of the dice.
+// Public:
+//                   Class constructor based on the number of sides
+//
+//
+//
 
 class Dice {
 private:
@@ -24,6 +42,22 @@ public:
         return a;
     }
 };
+
+
+
+
+// Class Player which creates and class that store the player name and score
+// Private Variables:
+//                  1. name -> Player Name
+//                  2. score -> Player Name
+// Public 
+//                  1.Class constructor load name and score
+//                  2.getters for score
+//                  3.addToScore -> Update Score
+//
+//
+//
+
 
 class Player {
 private:
@@ -51,6 +85,25 @@ public:// Getter : Player Name
 
     }
 };
+
+// Class DiceGame which defines the basic charecteristics of a dice game
+// such as a function for the inout of new player information, etc. It 
+// creates objects of the class Players and Dice .
+// Private Variables:
+//                  1.getNameAndScore-> Define Delimter to store name and score in the file
+// Protected Variables:
+//                  1.players -> Array of pointers to point to the Player objects
+//                  2.Dice ->Pointers to point to the Dice object
+//                  3.numPlayers, numDice-> TEMP Integer values
+// Public 
+//                  1.virtual void play()-> Virutal Function to be implement in the particalur game clases
+//                  2.initPlayers()-> Initilize the players of the class
+//                  3.displayScores()-> Display scores of each player
+//                  4.writeScoresToFile()-> Write Scores in the file 
+//                  5.findHighestScore()-> Display highest score in the file
+//
+//
+//
 
 class DiceGame {
 private:
@@ -138,10 +191,9 @@ public:
 };
 
 
-
-
-
-
+// Class Knockout -> Inherits from the DiceGame Class 
+// We difine the virtual function play() here for the game
+//
 
 class KnockOut : public DiceGame {
 private:
@@ -171,7 +223,6 @@ public:
         }
 
         Remaining_Players = numPlayers;
-
         while (Remaining_Players > 1)
         {
            
@@ -182,7 +233,7 @@ public:
                 {
                     Roll_Sum += dice->roll();
                 }
-                Original_Players[i]->addToScore(Roll_Sum);
+
                 if (Roll_Sum == Knock_Out_Score)
                 {   
                     cout<<"\n"<<Original_Players[i]->getName()<<" is knocked out \n";
@@ -196,7 +247,7 @@ public:
       
         for (int i = 0; i < numPlayers; i++)
         {   
-            if (Original_Players[i]->getScore() > 0) 
+            if (Original_Players[i]->getScore() >=0) 
             {   cout<<"\nGAME WINNER: \n";
                 
                 players[i]->addToScore(10); 
@@ -209,8 +260,9 @@ public:
 };
 
 
-
-
+// Class BostonDiceGame -> Inherits from the DiceGame Class 
+// We difine the virtual function play() here for the game
+//
 
 
 class BostonDiceGame : public DiceGame
@@ -243,17 +295,19 @@ public:
     }
 };
 
+// Main Funtion
+
 
 int main()
 {   DiceGame* obj;
     int game, numPlayers, numDice, numSides;
-    cout << "ENTER WHICH GAME YOU WOULD LIKE TO PLAY: \n1. Knock Out\n2. Boston Dice Game \n";
+    cout << "ENTER WHICH GAME YOU WOULD LIKE TO PLAY: \n1. Knock Out \n2. Boston Dice Game \n";
     cin >> game;
-    cout << "Enter the number of dice ";
+    cout << "Enter the number of dice \n";
     cin >> numDice;
-    cout << "Enter the number of sides on the dice";
+    cout << "Enter the number of sides on the dice\n";
     cin >> numSides;
-    cout << "Enter the number of Players:";
+    cout << "Enter the number of Players:\n";
     cin >> numPlayers;
     if (game == 1) {
         KnockOut obj2(numSides, numPlayers, numDice);
